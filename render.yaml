@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: fund-bot
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm run render-start
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: ADMIN_IDS
+        sync: false
+      - key: WEBAPP_URL
+        value: https://fund-bot.onrender.com

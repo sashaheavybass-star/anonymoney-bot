@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Сбор на юбилей</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <div class="screen">
+    <div class="title-bar">
+      <span id="title">Сбор на юбилей</span>
+    </div>
+
+    <div class="stats">
+      <div class="amount" id="amount">0 ₽</div>
+      <div class="goal" id="goal">Цель: 0 ₽</div>
+    </div>
+
+    <div class="cake-area" id="cakeArea">
+      <div class="glow"></div>
+      <img class="cake" id="cakeImg" src="assets/cake-1.png" alt="Пирог" draggable="false" />
+    </div>
+
+    <div class="progress-wrap">
+      <div class="percent" id="percent">0%</div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <div class="hint">Нажмите на пирог ✨</div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
