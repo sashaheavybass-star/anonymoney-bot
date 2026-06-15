@@ -57,7 +57,7 @@ function mainKeyboard(ctx) {
 const pendingInput = new Map();
 
 async function sendPie(ctx) {
-  const data = load();
+  const data = await load();
   await ctx.sendChatAction('upload_video');
   const buffer = await renderCakeAnimation(data);
   await ctx.replyWithAnimation({ source: buffer }, {
@@ -66,7 +66,7 @@ async function sendPie(ctx) {
 }
 
 async function sendHearts(ctx) {
-  const data = load();
+  const data = await load();
   await ctx.sendChatAction('upload_video');
   const buffer = await renderHeartsAnimation(data);
   await ctx.replyWithAnimation({ source: buffer }, {
@@ -126,9 +126,9 @@ bot.command('setgoal', async (ctx) => {
   if (!arg || isNaN(value) || value <= 0) {
     return ctx.reply('Использование: /setgoal <сумма>\nНапример: /setgoal 100000');
   }
-  const data = load();
+  const data = await load();
   data.goal = value;
-  save(data);
+  await save(data);
   await ctx.reply(`Цель установлена: ${formatMoney(value)} ₽`);
   await sendPie(ctx);
 });
@@ -140,9 +140,9 @@ bot.command('set', async (ctx) => {
   if (!arg || isNaN(value) || value < 0) {
     return ctx.reply('Использование: /set <сумма>\nНапример: /set 35000');
   }
-  const data = load();
+  const data = await load();
   data.current = value;
-  save(data);
+  await save(data);
   await ctx.reply(`Текущая сумма обновлена: ${formatMoney(value)} ₽`);
   await sendPie(ctx);
 });
@@ -153,9 +153,9 @@ bot.command('settitle', async (ctx) => {
   if (!title) {
     return ctx.reply('Использование: /settitle <название сбора>');
   }
-  const data = load();
+  const data = await load();
   data.title = title;
-  save(data);
+  await save(data);
   await ctx.reply(`Название обновлено: «${title}»`);
 });
 
@@ -166,9 +166,9 @@ bot.on('text', async (ctx) => {
 
   if (mode === 'title') {
     pendingInput.delete(ctx.from.id);
-    const data = load();
+    const data = await load();
     data.title = text;
-    save(data);
+    await save(data);
     await ctx.reply(`Название обновлено: «${text}»`, mainKeyboard(ctx));
     return sendPie(ctx);
   }
@@ -179,14 +179,14 @@ bot.on('text', async (ctx) => {
   }
 
   pendingInput.delete(ctx.from.id);
-  const data = load();
+  const data = await load();
   if (mode === 'set') {
     data.current = value;
-    save(data);
+    await save(data);
     await ctx.reply(`Текущая сумма обновлена: ${formatMoney(value)} ₽`, mainKeyboard(ctx));
   } else if (mode === 'goal') {
     data.goal = value;
-    save(data);
+    await save(data);
     await ctx.reply(`Цель установлена: ${formatMoney(value)} ₽`, mainKeyboard(ctx));
   }
   return sendPie(ctx);

@@ -7,8 +7,8 @@ const PORT = process.env.PORT || process.env.WEBAPP_PORT || 3000;
 const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/api/data', (req, res) => {
-  const data = load();
+app.get('/api/data', async (req, res) => {
+  const data = await load();
   res.json(data);
 });
 

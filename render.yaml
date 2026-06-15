@@ -12,3 +12,13 @@ services:
         sync: false
       - key: WEBAPP_URL
         value: https://fund-bot-aodk.onrender.com
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: fund-bot-kv
+          property: connectionString
+
+  - type: keyvalue
+    name: fund-bot-kv
+    plan: free
+    ipAllowList: []
