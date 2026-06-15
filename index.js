@@ -32,10 +32,15 @@ const BTN_CANCEL = '❌ Отмена';
 
 const WEBAPP_URL = process.env.WEBAPP_URL;
 
-function appButton() {
+function appButton(ctx) {
   if (!WEBAPP_URL) return null;
+  if (ctx.chat?.type === 'private') {
+    return Markup.inlineKeyboard([
+      Markup.button.webApp('🍰 Открыть приложение', WEBAPP_URL),
+    ]);
+  }
   return Markup.inlineKeyboard([
-    Markup.button.webApp('🍰 Открыть приложение', WEBAPP_URL),
+    Markup.button.url('🍰 Открыть приложение', WEBAPP_URL),
   ]);
 }
 
@@ -74,14 +79,14 @@ bot.start(async (ctx) => {
     'Привет! Я показываю прогресс сбора средств на юбилей.\n\nИспользуйте панель кнопок ниже 👇',
     mainKeyboard(ctx)
   );
-  const btn = appButton();
+  const btn = appButton(ctx);
   if (btn) {
     await ctx.reply('Откройте мини-приложение:', btn);
   }
 });
 
 bot.command('app', async (ctx) => {
-  const btn = appButton();
+  const btn = appButton(ctx);
   if (!btn) return ctx.reply('Мини-приложение пока не настроено.');
   await ctx.reply('Откройте мини-приложение:', btn);
 });
@@ -185,6 +190,10 @@ bot.on('text', async (ctx) => {
     await ctx.reply(`Цель установлена: ${formatMoney(value)} ₽`, mainKeyboard(ctx));
   }
   return sendPie(ctx);
+});
+
+bot.catch((err, ctx) => {
+  console.error(`Ошибка при обработке обновления ${ctx.update.update_id}:`, err);
 });
 
 bot.launch().then(() => console.log('Бот запущен'));
