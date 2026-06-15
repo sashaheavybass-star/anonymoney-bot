@@ -11,4 +11,4 @@ services:
       - key: ADMIN_IDS
         sync: false
       - key: WEBAPP_URL
-        value: https://fund-bot.onrender.com
+        value: https://fund-bot-aodk.onrender.com
