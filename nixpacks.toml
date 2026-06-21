@@ -1,0 +1,2 @@
+[phases.setup]
+aptPkgs = ["libatomic1", "libfontconfig1", "libglib2.0-0", "libpangocairo-1.0-0", "libjpeg-dev", "libpng-dev"]
